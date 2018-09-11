@@ -21,6 +21,57 @@ accessType|Optional|READ, WRITE, EXECUTE, * (for all)
 group|Optional|To use a mix of and and or conditions, different group value can be used to make and condition for filters. Multiple Data ACLs with in same group are always or condition. All Data ACLs with no group value are treated as a single same group.
 errorCode|optional|error code to be used for data access error
 
+### Getting Started
+
+To use this Data ACL feature in project from this module, you should install this module.
+
+### Dependency
+* oe-logger
+* oe-cloud
+
+### Testing and Code coverage
+
+```sh
+$ git clone http://evgit/oec-next/oe-data-acl.git
+$ cd oe-data-acl
+$ npm install --no-optional
+$ npm run grunt-cover
+```
+
+you can find coverage report in coverage folder.
+
+
+### Installation
+
+To use oe-data-acl in your application, you should include this module as a dependency to your app package.json as shown below.
+
+
+```javascript
+"oe-data-acl": "git+http://evgit/oec-next/oe-data-acl.git#master"
+```
+
+You can also install this mixin on command line using npm install. 
+
+
+```sh
+$ npm install <git path oe-data-acl> --no-optional
+```
+
+
+### Attaching to Application
+
+Once you have included this module in package.json, this module will get installed as part of npm install.TO use this in your app, you need to create entry in **app-list.json** file of application.
+
+app-list.json
+
+```javascript
+
+  {
+    "path": "oe-data-acl",
+    "enabled": true
+  }
+```
+
 ### Data ACL Examples
 Standard ACL for allowing WRITE access on a model to role ROLE123 is given as below
 ```
