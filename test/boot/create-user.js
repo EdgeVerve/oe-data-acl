@@ -17,6 +17,12 @@ module.exports = function (app, done) {
     'email': 'foo2@gmail.com'
   };
 
+  var user3 = {
+    'username': 'foo3',
+    'password': 'bar3',
+    'email': 'foo3@gmail.com'
+  };
+
   var defaultContext = { ctx: { tenantId: "/default" } };
   async.series([function (callback) {
     userModel.create(user1, defaultContext, function (err, result) {
@@ -36,6 +42,20 @@ module.exports = function (app, done) {
     userModel.create(user2, defaultContext, function (err, result) {
       var user = result;
       role.create({ name: "ROLEB" }, defaultContext, function (err, res) {
+        var dbRole = res;
+        var mapping = {};
+        mapping.principalId = user.id;
+        mapping.principalType = 'USER';
+        mapping.roleId = dbRole.id;
+        roleMapping.create(mapping, defaultContext, function (err, res) {
+          callback();
+        });
+      });
+    });
+  },function (callback) {
+    userModel.create(user3, defaultContext, function (err, result) {
+      var user = result;
+      role.create({ name: "ROLEC" }, defaultContext, function (err, res) {
         var dbRole = res;
         var mapping = {};
         mapping.principalId = user.id;

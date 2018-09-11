@@ -48,8 +48,28 @@ module.exports = function (app, done) {
       principalId: 'ROLEB',
       accessType: 'READ',
       filter: { 'department': 'finance' }
+    },
+    {
+      model: modelName,
+      principalType: 'ROLE',
+      principalId: 'ROLEB',
+      accessType: 'WRITE',
+      filter: { 'department': '@ctx.department.deptId' }
+    },
+    {
+      model: modelName,
+      principalType: 'ROLE',
+      principalId: 'ROLEC',
+      accessType: 'READ',
+      filter: { 'department': '@CC.dept' }
+    },
+    {
+      model: modelName,
+      principalType: 'ROLE',
+      principalId: 'ROLEC',
+      accessType: 'WRITE',
+      filter: { 'department': 'engg' }
     }
-
   ];
   dataAcl.destroyAll({}, { ignoreAutoScope: true }, function (err) {
     dataAcl.create(dataacls, { ctx: { tenantId: "/default" } }, function (err, r) {

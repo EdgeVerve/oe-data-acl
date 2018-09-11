@@ -49,8 +49,15 @@ describe(chalk.blue('data-acl-test'), function () {
     'email': 'foo2@gmail.com'
   };
 
+  var user3 = {
+    'username': 'foo3',
+    'password': 'bar3',
+    'email': 'foo3@gmail.com'
+  };
+
   var user1token;
   var user2token;
+  var user3token;
 
   this.timeout(10000);
   before('wait for boot scripts to complete', function (done) {
@@ -188,22 +195,130 @@ describe(chalk.blue('data-acl-test'), function () {
       });
   });
 
-  // it('Create DataACL on unknown Model should throw error', function (done) {
-  //   var dataACL = loopback.findModel('DataACL');
-  //   var data = {
-  //     model: 'NON_EXISTING_MODEL',
-  //     principalType: 'ROLE',
-  //     principalId: 'ROLEB',
-  //     accessType: 'READ',
-  //     filter: { 'department': 'finance' }
-  //   };
-    
-  //   dataACL.create(data, {}, function (err, res) {
-  //     expect(res.status).to.be.equal(200);
-  //     expect(res.body.count).to.be.equal(1);
-  //     done();
-  //   })
-  // });
+  it('Create DataACL on unknown Model should throw error', function (done) {
+    var dataACL = loopback.findModel('DataACL');
+    var data = {
+      model: 'NON_EXISTING_MODEL',
+      principalType: 'ROLE',
+      principalId: 'ROLEB',
+      accessType: 'READ',
+      filter: { 'department': 'finance' }
+    };
+
+    dataACL.create(data, {}, function (err, res) {
+      expect(err.message).to.be.equal("Model 'NON_EXISTING_MODEL' doesn't exists.");
+      done();
+    })
+  });
+
+  it('login3', function (done) {
+    var postData = {
+      'username': user3.username,
+      'password': user3.password
+    };
+
+    var postUrl = basePath + '/Users/login';
+
+    api.set('Accept', 'application/json')
+      .set('tenant_id', 'test-tenant')
+      .post(postUrl)
+      .send(postData)
+      .expect(200).end(function (err, response) {
+        user3token = response.body.id;
+        done();
+      });
+  });
+
+  it('Executing DataACL for @ctx in DataACL filter property but ctx is not passed', function (done) {
+    var data = {
+      name: 'fetchbyid_new',
+      id: '49023128-5d57-11e6-8b77-86f30ca893d3',
+      category: 'byid',
+      department: 'byid'
+    }
+    var url = basePath + '/' + modelName + 's/49023128-5d57-11e6-8b77-86f30ca893d3/?access_token=' + user2token;
+    api
+      .put(url)
+      .send(data)
+      .end(function (err, res) {
+        var response = res.body;
+        expect(response).to.exist;
+        expect(response.error).to.exist;
+        done();
+      });
+  });
+
+  it('Executing DataACL for WRITE access type', function (done) {
+    var data = {
+      name: 'fetchbyid_new',
+      id: '49023128-5d57-11e6-8b77-86f30ca893d3',
+      category: 'byid',
+      department: 'byid'
+    };
+
+    var url = basePath + '/' + modelName + 's/49023128-5d57-11e6-8b77-86f30ca893d3/?access_token=' + user3token;
+    api
+      .put(url)
+      .send(data)
+      .end(function (err, res) {
+        var response = res.body;
+        expect(response).to.exist;
+        expect(response.error).to.exist;
+        done();
+      });
+  });
+
+  it('Executing DataACL for WRITE access type', function (done) {
+    var data = {
+      name: 'Fluid Mechanics',
+      category: 'mech',
+      department: 'engg',
+      id:'mech_engg'
+    };
+
+    var url = basePath + '/' + modelName + 's/?access_token=' + user3token;
+    api
+      .post(url)
+      .send(data)
+      .end(function (err, res) {
+        var response = res.body;
+        expect(response).to.exist;
+        expect(response.id).to.be.equal('mech_engg');
+        done();
+      });
+  });
+
+  it('Executing DataACL for WRITE access type', function (done) {
+    var data = {
+      name: 'Fluid Mechanics Vol2',
+      category: 'mech',
+      department: 'engg',
+      id:'mech_engg'
+    };
+
+    var url = basePath + '/' + modelName + 's/?access_token=' + user3token;
+    api
+      .put(url)
+      .send(data)
+      .end(function (err, res) {
+        var response = res.body;
+        expect(response).to.exist;
+        expect(response.id).to.be.equal('mech_engg');
+        done();
+      });
+  });
+
+  it('Executing DataACL for READ access type Executing DataACL for @cc in DataACL filter property but ctx is not passed', function (done) {
+    var url = basePath + '/' + modelName + 's/?access_token=' + user3token;
+    api
+      .get(url)
+      .end(function (err, res) {
+        var response = res.body;
+        expect(response).to.exist;
+        expect(response.error).to.exist;
+        done();
+      });
+  });
 
 });
 

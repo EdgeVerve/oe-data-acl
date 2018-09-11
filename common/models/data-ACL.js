@@ -74,7 +74,7 @@ function buildFilter(filter, ctx) {
           throw err;
         }
       } else if (value.startsWith('@CC.')) {
-        filter[item] = getValue(ctx, value.substr(5));
+        filter[item] = getValue(ctx, value.substr(4));
         if (!filter[item]) {
           var err1 = new Error('Context not present');
           err1.retriable = false;
@@ -249,7 +249,7 @@ module.exports = function DataACLFn(DataACL) {
           }
         }
 
-        var updateMethods = ['create', 'updateAttributes', 'update', 'updateOrCreate', 'upsert'];
+        var updateMethods = ['create', 'updateAttributes', 'update', 'updateOrCreate', 'upsert','replaceById'];
         var applyDataACLOnBody = updateMethods.indexOf(method.name) >= 0 || method.applyDataACLOnBody;
         // Only if this method is for parent model
         // and only for those methods which accepts body
