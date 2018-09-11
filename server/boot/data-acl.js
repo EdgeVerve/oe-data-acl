@@ -26,7 +26,12 @@ module.exports = function DataACL(app, cb) {
   dataACLModel.observe('after save', dataACLAfterSave);
   // TODO: Need to check whether to introduce 'disabled' property for DataACL
   var filter = {};
-  dataACLModel.find(filter, {}, function (err, results) {
+  var options = {
+    ignoreAutoScope: true,
+    fetchAllScopes: true
+  };
+
+  dataACLModel.find(filter, options, function (err, results) {
     log.debug(log.defaultContext(), 'dataACLModel.find executed.');
     if (err) {
       log.error(log.defaultContext(), 'dataACLModel.find error. Error', err);

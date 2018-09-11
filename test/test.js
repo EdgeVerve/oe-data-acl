@@ -320,5 +320,22 @@ describe(chalk.blue('data-acl-test'), function () {
       });
   });
 
+  it('Executing DataACL for WRITE access type', function (done) {
+    var data = {
+      name: 'Fluid Mechanics Vol3'
+    };
+
+    var url = basePath + '/' + modelName + 's/mech_engg/?access_token=' + user3token;
+    api
+      .patch(url)
+      .send(data)
+      .end(function (err, res) {
+        var response = res.body;
+        expect(response).to.exist;
+        expect(response.id).to.be.equal('mech_engg');
+        done();
+      });
+  });
+
 });
 

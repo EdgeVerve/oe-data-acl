@@ -30,7 +30,6 @@ var loopback = require('loopback');
 var applyFilter = require('loopback-filters');
 var mergeQuery = require('loopback-datasource-juggler/lib/utils').mergeQuery;
 var async = require('async');
-
 var loopbackAccessContext = require('loopback/lib/access-context');
 var AccessContext = loopbackAccessContext.AccessContext;
 var errorUtil = require('oe-cloud/lib/error-utils').getValidationError;
@@ -50,17 +49,6 @@ function getValue(target, field) {
   }
   return retVal;
 }
-
-
-// function hasBody(accepts) {
-//    for (var i = 0; i < accepts.length; i++) {
-//        var arg = accepts[i];
-//        if (arg.http && arg.http.source === 'body') {
-//            return true;
-//        }
-//    }
-//    return false;
-// }
 
 function buildFilter(filter, ctx) {
   Object.keys(filter).map(function filterForEachKey(item) {
@@ -183,9 +171,7 @@ module.exports = function DataACLFn(DataACL) {
 
       async.parallel(inRoleTasks, function inRoleTasks(err, results) {
         if (err) {
-          if (callback) {
-            return callback(err, null);
-          }
+          return callback(err, null);
         }
 
         var filterUsed = (dataFilter[1] && Object.keys(dataFilter[1]).length) ? dataFilter[1] : dataFilter[0];
@@ -205,13 +191,13 @@ module.exports = function DataACLFn(DataACL) {
           error.message = `The DataACL defined is invalid for model ${modelName} `;
           error.code = 'DATA_ACL_ERROR_090';
           error.type = 'value in context is missing';
+          log.error(log.defaultContext(), 'DataACL filter error', error);
           return callback(error);
         }
         var filter = ctx.args.filter || {};
         if (typeof ctx.args.filter === 'string') {
           filter = JSON.parse(filter);
         }
-
         Object.keys(filterUsed).forEach(function filterUsedForEach(group) {
           if (filterUsed[group].length === 1) {
             mergeQuery(filter, {
@@ -249,7 +235,7 @@ module.exports = function DataACLFn(DataACL) {
           }
         }
 
-        var updateMethods = ['create', 'updateAttributes', 'update', 'updateOrCreate', 'upsert','replaceById'];
+        var updateMethods = ['create', 'updateAttributes', 'update', 'updateOrCreate', 'upsert', 'replaceById', 'replaceOrCreate'];
         var applyDataACLOnBody = updateMethods.indexOf(method.name) >= 0 || method.applyDataACLOnBody;
         // Only if this method is for parent model
         // and only for those methods which accepts body
@@ -279,6 +265,7 @@ module.exports = function DataACLFn(DataACL) {
           obj.options = callContext;
           errorUtil(errorCode, obj, function errorUtil(err) {
             err.statusCode = 403;
+            log.error(log.defaultContext(), 'Data Access Control does not allow access', err);
             return callback(err, failed);
           });
         } else {
