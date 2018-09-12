@@ -1,0 +1,14 @@
+{
+  "_meta": {
+    "sources": [
+      "../common/models"
+    ],
+    "mixins": [
+      "../common/mixins"
+    ]
+  },
+  "DataACL": {
+    "dataSource": "db",
+    "public": true
+  }  
+}

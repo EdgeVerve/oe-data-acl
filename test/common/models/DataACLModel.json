@@ -1,0 +1,29 @@
+{
+  "name": "DataACLModel",
+  "base": "BaseEntity",
+  "idInjection": true,
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "product": {
+      "type": "string"
+    },
+    "quantity": {
+      "type": "number"
+    },
+    "department": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
