@@ -47,7 +47,7 @@ To use oe-data-acl in your application, you should include this module as a depe
 
 
 ```javascript
-"oe-data-acl": "git+http://evgit/oecloud.io/oe-data-acl.git#master"
+"oe-data-acl": "git+http://evgit/oecloud.io/oe-data-acl.git#2.0.0"
 ```
 
 You can also install this mixin on command line using npm install.
