@@ -4,7 +4,7 @@
 It is recommended to understand the concept of Loopback ACL before going through Data ACL concept. We can find the loopback ACL documentation [here](https://docs.strongloop.com/display/public/LB/Authentication%2C+authorization%2C+and+permissions).
 
 ### Overview
-Standard loopback ACL feature allows to set access type (READ/WRITE) for any method of a model. However it either allows all data or none of the data to be accessed, Data ACL allows the missing feature of specifying the filter conditions on data for specific role or user.  
+Standard loopback ACL feature allows to set access type (READ/WRITE) for any method of a model. However it either allows all data or none of the data to be accessed, Data ACL allows the missing feature of specifying the filter conditions on data for specific role or user.
 
 Even if Data ACL is setup, it is mandatory to setup loopback ACL to get combined functionality, as Data ACL supports filter for ALLOW only.
 
@@ -32,7 +32,7 @@ To use this Data ACL feature in project from this module, you should install thi
 ### Testing and Code coverage
 
 ```sh
-$ git clone http://evgit/oec-next/oe-data-acl.git
+$ git clone http://evgit/oecloud.io/oe-data-acl.git
 $ cd oe-data-acl
 $ npm install --no-optional
 $ npm run grunt-cover
@@ -47,10 +47,10 @@ To use oe-data-acl in your application, you should include this module as a depe
 
 
 ```javascript
-"oe-data-acl": "git+http://evgit/oec-next/oe-data-acl.git#master"
+"oe-data-acl": "git+http://evgit/oecloud.io/oe-data-acl.git#master"
 ```
 
-You can also install this mixin on command line using npm install. 
+You can also install this mixin on command line using npm install.
 
 
 ```sh
@@ -148,9 +148,9 @@ For example following two Data ACLs will actually apply a single filter conditio
 }
 ```
 
-### Usage of Group property in Data ACL 
+### Usage of Group property in Data ACL
 
-To use a mix of and and or conditions 
+To use a mix of and and or conditions
 
 For example following Data ACL combines to single filter ```category (Books or Music) and Country (India or Ireland)```
 ```
