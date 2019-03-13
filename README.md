@@ -32,7 +32,7 @@ To use this Data ACL feature in project from this module, you should install thi
 ### Testing and Code coverage
 
 ```sh
-$ git clone http://evgit/oecloud.io/oe-data-acl.git
+$ git clone https://github.com/EdgeVerve/oe-data-acl.git
 $ cd oe-data-acl
 $ npm install --no-optional
 $ npm run grunt-cover
@@ -47,7 +47,7 @@ To use oe-data-acl in your application, you should include this module as a depe
 
 
 ```javascript
-"oe-data-acl": "git+http://evgit/oecloud.io/oe-data-acl.git#2.0.0"
+"oe-data-acl": "git+https://github.com/EdgeVerve/oe-data-acl.git#2.0.0"
 ```
 
 You can also install this mixin on command line using npm install.
