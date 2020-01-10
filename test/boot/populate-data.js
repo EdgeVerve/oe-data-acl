@@ -98,9 +98,9 @@ module.exports = function (app, done) {
       }
 
     ];
-    dataACLModel.create(items, { ctx: { tenantId: "/default" } }, function (err, r) {
+    dataACLModel.create(items, { ctx: { tenantId: '/default' } }, function (err, r) {
       return done();
     });
   });
-}
+};
 

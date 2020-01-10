@@ -2,7 +2,7 @@ var loopback = require('loopback');
 var async = require('async');
 
 module.exports = function (app, done) {
-  var userModel = loopback.getModelByType("User");
+  var userModel = loopback.getModelByType('User');
   var role = loopback.getModelByType('Role');
   var roleMapping = loopback.getModelByType('RoleMapping');
   var user1 = {
@@ -23,11 +23,11 @@ module.exports = function (app, done) {
     'email': 'foo3@gmail.com'
   };
 
-  var defaultContext = { ctx: { tenantId: "/default" } };
+  var defaultContext = { ctx: { tenantId: '/default' } };
   async.series([function (callback) {
     userModel.create(user1, defaultContext, function (err, result) {
       var user = result;
-      role.create({ name: "ROLEA" }, defaultContext, function (err, res) {
+      role.create({ name: 'ROLEA' }, defaultContext, function (err, res) {
         var dbRole = res;
         var mapping = {};
         mapping.principalId = user.id;
@@ -41,7 +41,7 @@ module.exports = function (app, done) {
   }, function (callback) {
     userModel.create(user2, defaultContext, function (err, result) {
       var user = result;
-      role.create({ name: "ROLEB" }, defaultContext, function (err, res) {
+      role.create({ name: 'ROLEB' }, defaultContext, function (err, res) {
         var dbRole = res;
         var mapping = {};
         mapping.principalId = user.id;
@@ -52,10 +52,10 @@ module.exports = function (app, done) {
         });
       });
     });
-  },function (callback) {
+  }, function (callback) {
     userModel.create(user3, defaultContext, function (err, result) {
       var user = result;
-      role.create({ name: "ROLEC" }, defaultContext, function (err, res) {
+      role.create({ name: 'ROLEC' }, defaultContext, function (err, res) {
         var dbRole = res;
         var mapping = {};
         mapping.principalId = user.id;
@@ -69,6 +69,5 @@ module.exports = function (app, done) {
   }], function () {
     done();
   });
-
-}
+};
 
