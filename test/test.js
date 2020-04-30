@@ -2,9 +2,9 @@ var oecloud = require('oe-cloud');
 var loopback = require('loopback');
 
 oecloud.observe('loaded', function (ctx, next) {
-  console.log("oe-cloud modules loaded");
+  console.log('oe-cloud modules loaded');
   return next();
-})
+});
 
 
 oecloud.boot(__dirname, function (err) {
@@ -15,7 +15,6 @@ oecloud.boot(__dirname, function (err) {
   oecloud.start();
   oecloud.emit('test-start');
 });
-
 
 
 var chalk = require('chalk');
@@ -34,7 +33,6 @@ var basePath = app.get('restApiRoot');
 
 
 describe(chalk.blue('data-acl-test'), function () {
-
   var modelName = 'DataACLModel';
 
   var user1 = {
@@ -190,7 +188,6 @@ describe(chalk.blue('data-acl-test'), function () {
           expect(res.status).to.be.equal(200);
           expect(res.body.count).to.be.equal(1);
           done();
-
         });
       });
   });
@@ -208,7 +205,7 @@ describe(chalk.blue('data-acl-test'), function () {
     dataACL.create(data, {}, function (err, res) {
       expect(err.message).to.be.equal("Model 'NON_EXISTING_MODEL' doesn't exists.");
       done();
-    })
+    });
   });
 
   it('login3', function (done) {
@@ -235,7 +232,7 @@ describe(chalk.blue('data-acl-test'), function () {
       id: '49023128-5d57-11e6-8b77-86f30ca893d3',
       category: 'byid',
       department: 'byid'
-    }
+    };
     var url = basePath + '/' + modelName + 's/49023128-5d57-11e6-8b77-86f30ca893d3/?access_token=' + user2token;
     api
       .put(url)
@@ -273,7 +270,7 @@ describe(chalk.blue('data-acl-test'), function () {
       name: 'Fluid Mechanics',
       category: 'mech',
       department: 'engg',
-      id:'mech_engg'
+      id: 'mech_engg'
     };
 
     var url = basePath + '/' + modelName + 's/?access_token=' + user3token;
@@ -293,7 +290,7 @@ describe(chalk.blue('data-acl-test'), function () {
       name: 'Fluid Mechanics Vol2',
       category: 'mech',
       department: 'engg',
-      id:'mech_engg'
+      id: 'mech_engg'
     };
 
     var url = basePath + '/' + modelName + 's/?access_token=' + user3token;
@@ -336,6 +333,5 @@ describe(chalk.blue('data-acl-test'), function () {
         done();
       });
   });
-
 });
 

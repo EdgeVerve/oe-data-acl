@@ -1,7 +1,7 @@
 var loopback = require('loopback');
 
 module.exports = function (app, done) {
-  var dataAcl = loopback.findModel("DataACL");
+  var dataAcl = loopback.findModel('DataACL');
   var modelName = 'DataACLModel';
   var dataacls = [
     {
@@ -72,9 +72,9 @@ module.exports = function (app, done) {
     }
   ];
   dataAcl.destroyAll({}, { ignoreAutoScope: true }, function (err) {
-    dataAcl.create(dataacls, { ctx: { tenantId: "/default" } }, function (err, r) {
+    dataAcl.create(dataacls, { ctx: { tenantId: '/default' } }, function (err, r) {
       return done();
     });
   });
-}
+};
 
